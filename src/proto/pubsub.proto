@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package viamlabs.services.pubsub.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "./pubsub-api";
+
+service PubsubService {
+  rpc Publish(PublishRequest) returns (PublishResponse) {
+    option (google.api.http) = {
+      post: "/acme/api/v1/service/pubsub/{name}/publish"
+    };
+  }
+  rpc Subscribe(SubscribeRequest) returns (stream SubscribeResponse) {
+    option (google.api.http) = {
+      post: "/acme/api/v1/service/pubsub/{name}/subscribe"
+    };
+  }
+  rpc Unsubscribe(UnsubscribeRequest) returns (UnsubscribeResponse) {
+    option (google.api.http) = {
+      post: "/acme/api/v1/service/pubsub/{name}/unsubscribe"
+    };
+  }
+}
+
+message PublishRequest {
+  string name = 1;
+  string topic = 2;
+  string message = 3;
+  int32 qos = 4;
+}
+
+message PublishResponse {
+  string response = 1;
+}
+
+message SubscribeRequest {
+  string name = 1;
+  string topic = 2;
+}
+
+message SubscribeResponse {
+  string message = 1;
+}
+
+message UnsubscribeRequest {
+  string name = 1;
+  string topic = 2;
+}
+
+message UnsubscribeResponse {
+  string response = 1;
+}

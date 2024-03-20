@@ -1,0 +1,23 @@
+# note - after buf generate change this line in pubsub_grpc.py:
+# from . import pubsub_pb2
+version: v1
+plugins:
+  - name: python
+    out: pubsub_python/grpc
+  - name: grpclib_python
+    out: pubsub_python/grpc
+  - name: mypy
+    out: pubsub_python/grpc
+  - name: go
+    out: pubsub_go/grpc
+    opt:
+      - paths=source_relative
+  - name: go-grpc
+    out: pubsub_go/grpc
+    opt:
+      - paths=source_relative
+  - name: grpc-gateway
+    out: pubsub_go/grpc
+    opt:
+      - paths=source_relative
+      - generate_unbound_methods=true
