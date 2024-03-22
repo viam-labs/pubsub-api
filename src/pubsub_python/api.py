@@ -30,10 +30,10 @@ from viam.resource.rpc_service_base import ResourceRPCServiceBase
 from viam.resource.types import RESOURCE_TYPE_SERVICE, Subtype
 from viam.services.service_base import ServiceBase
 
-from ..proto.pubsub_grpc import PubsubServiceBase, PubsubServiceStub
+from .grpc.pubsub_grpc import PubsubServiceBase, PubsubServiceStub
 
 # update the below with actual methods for your API!
-from ..proto.pubsub_pb2 import PublishRequest, PublishResponse, SubscribeRequest, SubscribeResponse, UnsubscribeRequest, UnsubscribeResponse
+from .grpc.pubsub_pb2 import PublishRequest, PublishResponse, SubscribeRequest, SubscribeResponse, UnsubscribeRequest, UnsubscribeResponse
 
 
 class Pubsub(ServiceBase):
