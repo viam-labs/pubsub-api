@@ -40,7 +40,7 @@ pubsub_api @ git+https://github.com/viam-labs/pubsub-api.git@main
 
 You can now import and use it in your code as follows:
 
-```
+``` python
 from pubsub_python import Pubsub
 api = Pubsub.from_robot(robot, name="pubsub")
 api.publish("topic", "message", 0)
