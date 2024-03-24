@@ -69,7 +69,7 @@ class PubsubRPCService(PubsubServiceBase, ResourceRPCServiceBase):
         assert request is not None
         name = request.name
         service = self.get_resource(name)
-        while resp := await service.subscribe(request.topic, request.message, request.qos):
+        while resp := await service.subscribe(request.topic):
             await stream.send_message(SubscribeResponse(message=resp))
 
     async def Unsubscribe(self, stream: Stream[UnsubscribeRequest, UnsubscribeResponse]) -> None:
