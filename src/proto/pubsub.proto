@@ -12,11 +12,8 @@ service PubsubService {
       post: "/acme/api/v1/service/pubsub/{name}/publish"
     };
   }
-  rpc Subscribe(SubscribeRequest) returns (stream SubscribeResponse) {
-    option (google.api.http) = {
-      get: "/acme/api/v1/service/pubsub/{name}/subscribe"
-    };
-  }
+  rpc Subscribe(SubscribeRequest) returns (stream SubscribeResponse); 
+  
   rpc Unsubscribe(UnsubscribeRequest) returns (UnsubscribeResponse) {
     option (google.api.http) = {
       post: "/acme/api/v1/service/pubsub/{name}/unsubscribe"

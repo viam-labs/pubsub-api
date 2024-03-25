@@ -15,7 +15,7 @@ _sym_db = _symbol_database.Default()
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cpubsub.proto\x12\x1bviamlabs.services.pubsub.v1\x1a\x1cgoogle/api/annotations.proto\"f\n\x0ePublishRequest\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n\x05topic\x18\x02 \x01(\tR\x05topic\x12\x18\n\x07message\x18\x03 \x01(\tR\x07message\x12\x10\n\x03qos\x18\x04 \x01(\x05R\x03qos\"-\n\x0fPublishResponse\x12\x1a\n\x08response\x18\x01 \x01(\tR\x08response\"<\n\x10SubscribeRequest\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n\x05topic\x18\x02 \x01(\tR\x05topic\"-\n\x11SubscribeResponse\x12\x18\n\x07message\x18\x01 \x01(\tR\x07message\">\n\x12UnsubscribeRequest\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n\x05topic\x18\x02 \x01(\tR\x05topic\"1\n\x13UnsubscribeResponse\x12\x1a\n\x08response\x18\x01 \x01(\tR\x08response2\xfa\x03\n\rPubsubService\x12\x98\x01\n\x07Publish\x12+.viamlabs.services.pubsub.v1.PublishRequest\x1a,.viamlabs.services.pubsub.v1.PublishResponse\"2\x82\xd3\xe4\x93\x02,\"*/acme/api/v1/service/pubsub/{name}/publish\x12\xa2\x01\n\tSubscribe\x12-.viamlabs.services.pubsub.v1.SubscribeRequest\x1a..viamlabs.services.pubsub.v1.SubscribeResponse\"4\x82\xd3\xe4\x93\x02.\x12,/acme/api/v1/service/pubsub/{name}/subscribe0\x01\x12\xa8\x01\n\x0bUnsubscribe\x12/.viamlabs.services.pubsub.v1.UnsubscribeRequest\x1a\x30.viamlabs.services.pubsub.v1.UnsubscribeResponse\"6\x82\xd3\xe4\x93\x02\x30\"./acme/api/v1/service/pubsub/{name}/unsubscribeB\x0eZ\x0c./pubsub-apib\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cpubsub.proto\x12\x1bviamlabs.services.pubsub.v1\x1a\x1cgoogle/api/annotations.proto\"f\n\x0ePublishRequest\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n\x05topic\x18\x02 \x01(\tR\x05topic\x12\x18\n\x07message\x18\x03 \x01(\tR\x07message\x12\x10\n\x03qos\x18\x04 \x01(\x05R\x03qos\"-\n\x0fPublishResponse\x12\x1a\n\x08response\x18\x01 \x01(\tR\x08response\"<\n\x10SubscribeRequest\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n\x05topic\x18\x02 \x01(\tR\x05topic\"-\n\x11SubscribeResponse\x12\x18\n\x07message\x18\x01 \x01(\tR\x07message\">\n\x12UnsubscribeRequest\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n\x05topic\x18\x02 \x01(\tR\x05topic\"1\n\x13UnsubscribeResponse\x12\x1a\n\x08response\x18\x01 \x01(\tR\x08response2\xc3\x03\n\rPubsubService\x12\x98\x01\n\x07Publish\x12+.viamlabs.services.pubsub.v1.PublishRequest\x1a,.viamlabs.services.pubsub.v1.PublishResponse\"2\x82\xd3\xe4\x93\x02,\"*/acme/api/v1/service/pubsub/{name}/publish\x12l\n\tSubscribe\x12-.viamlabs.services.pubsub.v1.SubscribeRequest\x1a..viamlabs.services.pubsub.v1.SubscribeResponse0\x01\x12\xa8\x01\n\x0bUnsubscribe\x12/.viamlabs.services.pubsub.v1.UnsubscribeRequest\x1a\x30.viamlabs.services.pubsub.v1.UnsubscribeResponse\"6\x82\xd3\xe4\x93\x02\x30\"./acme/api/v1/service/pubsub/{name}/unsubscribeB\x0eZ\x0c./pubsub-apib\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -25,8 +25,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['DESCRIPTOR']._serialized_options = b'Z\014./pubsub-api'
   _globals['_PUBSUBSERVICE'].methods_by_name['Publish']._options = None
   _globals['_PUBSUBSERVICE'].methods_by_name['Publish']._serialized_options = b'\202\323\344\223\002,\"*/acme/api/v1/service/pubsub/{name}/publish'
-  _globals['_PUBSUBSERVICE'].methods_by_name['Subscribe']._options = None
-  _globals['_PUBSUBSERVICE'].methods_by_name['Subscribe']._serialized_options = b'\202\323\344\223\002.\022,/acme/api/v1/service/pubsub/{name}/subscribe'
   _globals['_PUBSUBSERVICE'].methods_by_name['Unsubscribe']._options = None
   _globals['_PUBSUBSERVICE'].methods_by_name['Unsubscribe']._serialized_options = b'\202\323\344\223\0020\"./acme/api/v1/service/pubsub/{name}/unsubscribe'
   _globals['_PUBLISHREQUEST']._serialized_start=75
@@ -42,5 +40,5 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_UNSUBSCRIBERESPONSE']._serialized_start=399
   _globals['_UNSUBSCRIBERESPONSE']._serialized_end=448
   _globals['_PUBSUBSERVICE']._serialized_start=451
-  _globals['_PUBSUBSERVICE']._serialized_end=957
+  _globals['_PUBSUBSERVICE']._serialized_end=902
 # @@protoc_insertion_point(module_scope)
