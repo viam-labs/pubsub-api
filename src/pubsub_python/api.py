@@ -45,7 +45,7 @@ class Pubsub(ServiceBase):
         ...
     
     @abc.abstractmethod
-    async def subscribe(self, topic: str, callback: Callable[[str], None]): 
+    async def subscribe(self, topic: str, callback: Callable[[str], None]) -> str: 
         ...
 
     @abc.abstractmethod
