@@ -4,7 +4,7 @@ Proto API and grpc bindings for pubsub capabilities
 
 *pubsub-api* provides Proto API and grpc bindings for pubsub capabilities
 
-Note: At this time, only the Python API is fully working, Go and others to come later.
+NOTE: At this time, only the Python API is working, Golang and others to come later.
 
 ## API
 
