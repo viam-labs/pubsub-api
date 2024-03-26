@@ -29,7 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PubsubServiceClient interface {
 	Publish(ctx context.Context, in *PublishRequest, opts ...grpc.CallOption) (*PublishResponse, error)
-	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (PubsubService_SubscribeClient, error)
+	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (*SubscribeResponse, error)
 	Unsubscribe(ctx context.Context, in *UnsubscribeRequest, opts ...grpc.CallOption) (*UnsubscribeResponse, error)
 }
 
@@ -50,36 +50,13 @@ func (c *pubsubServiceClient) Publish(ctx context.Context, in *PublishRequest, o
 	return out, nil
 }
 
-func (c *pubsubServiceClient) Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (PubsubService_SubscribeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PubsubService_ServiceDesc.Streams[0], PubsubService_Subscribe_FullMethodName, opts...)
+func (c *pubsubServiceClient) Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (*SubscribeResponse, error) {
+	out := new(SubscribeResponse)
+	err := c.cc.Invoke(ctx, PubsubService_Subscribe_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &pubsubServiceSubscribeClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type PubsubService_SubscribeClient interface {
-	Recv() (*SubscribeResponse, error)
-	grpc.ClientStream
-}
-
-type pubsubServiceSubscribeClient struct {
-	grpc.ClientStream
-}
-
-func (x *pubsubServiceSubscribeClient) Recv() (*SubscribeResponse, error) {
-	m := new(SubscribeResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	return out, nil
 }
 
 func (c *pubsubServiceClient) Unsubscribe(ctx context.Context, in *UnsubscribeRequest, opts ...grpc.CallOption) (*UnsubscribeResponse, error) {
@@ -96,7 +73,7 @@ func (c *pubsubServiceClient) Unsubscribe(ctx context.Context, in *UnsubscribeRe
 // for forward compatibility
 type PubsubServiceServer interface {
 	Publish(context.Context, *PublishRequest) (*PublishResponse, error)
-	Subscribe(*SubscribeRequest, PubsubService_SubscribeServer) error
+	Subscribe(context.Context, *SubscribeRequest) (*SubscribeResponse, error)
 	Unsubscribe(context.Context, *UnsubscribeRequest) (*UnsubscribeResponse, error)
 	mustEmbedUnimplementedPubsubServiceServer()
 }
@@ -108,8 +85,8 @@ type UnimplementedPubsubServiceServer struct {
 func (UnimplementedPubsubServiceServer) Publish(context.Context, *PublishRequest) (*PublishResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Publish not implemented")
 }
-func (UnimplementedPubsubServiceServer) Subscribe(*SubscribeRequest, PubsubService_SubscribeServer) error {
-	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
+func (UnimplementedPubsubServiceServer) Subscribe(context.Context, *SubscribeRequest) (*SubscribeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
 }
 func (UnimplementedPubsubServiceServer) Unsubscribe(context.Context, *UnsubscribeRequest) (*UnsubscribeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Unsubscribe not implemented")
@@ -145,25 +122,22 @@ func _PubsubService_Publish_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PubsubService_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
+func _PubsubService_Subscribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubscribeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
 	}
-	return srv.(PubsubServiceServer).Subscribe(m, &pubsubServiceSubscribeServer{stream})
-}
-
-type PubsubService_SubscribeServer interface {
-	Send(*SubscribeResponse) error
-	grpc.ServerStream
-}
-
-type pubsubServiceSubscribeServer struct {
-	grpc.ServerStream
-}
-
-func (x *pubsubServiceSubscribeServer) Send(m *SubscribeResponse) error {
-	return x.ServerStream.SendMsg(m)
+	if interceptor == nil {
+		return srv.(PubsubServiceServer).Subscribe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PubsubService_Subscribe_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PubsubServiceServer).Subscribe(ctx, req.(*SubscribeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _PubsubService_Unsubscribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -196,16 +170,14 @@ var PubsubService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PubsubService_Publish_Handler,
 		},
 		{
+			MethodName: "Subscribe",
+			Handler:    _PubsubService_Subscribe_Handler,
+		},
+		{
 			MethodName: "Unsubscribe",
 			Handler:    _PubsubService_Unsubscribe_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "Subscribe",
-			Handler:       _PubsubService_Subscribe_Handler,
-			ServerStreams: true,
-		},
-	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "pubsub.proto",
 }
