@@ -37,7 +37,7 @@ class PubsubServiceBase(abc.ABC):
             ),
             '/viamlabs.services.pubsub.v1.PubsubService/Subscribe': grpclib.const.Handler(
                 self.Subscribe,
-                grpclib.const.Cardinality.UNARY_UNARY,
+                grpclib.const.Cardinality.UNARY_STREAM,
                 pubsub_pb2.SubscribeRequest,
                 pubsub_pb2.SubscribeResponse,
             ),
@@ -59,7 +59,7 @@ class PubsubServiceStub:
             pubsub_pb2.PublishRequest,
             pubsub_pb2.PublishResponse,
         )
-        self.Subscribe = grpclib.client.UnaryUnaryMethod(
+        self.Subscribe = grpclib.client.UnaryStreamMethod(
             channel,
             '/viamlabs.services.pubsub.v1.PubsubService/Subscribe',
             pubsub_pb2.SubscribeRequest,
