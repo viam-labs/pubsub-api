@@ -69,7 +69,7 @@ class PubsubRPCService(PubsubServiceBase, ResourceRPCServiceBase):
         assert request is not None
         name = request.name
         service = self.get_resource(name)
-        while resp := await service.subscribe(request.topic):
+        async for resp in service.subscribe(request.topic):
             await stream.send_message(SubscribeResponse(message=resp))
 
     async def Unsubscribe(self, stream: Stream[UnsubscribeRequest, UnsubscribeResponse]) -> None:
@@ -93,9 +93,10 @@ class PubsubClient(Pubsub):
         return response.response
 
     async def subscribe(self, topic: str, callback: Callable[[str], None]):
-        request = SubscribeRequest(name=self.name, topic=topic)
-        for response in await self.client.Subscribe(request):
-            callback(response.message)
+        async with self.client.Subscribe.open() as stream:
+            await stream.send_message(SubscribeRequest(name=self.name, topic=topic), end=True)
+            async for response in stream:
+                callback(response.message)
      
     async def unsubscribe(self, topic: str) -> str:
         request = UnsubscribeRequest(name=self.name, topic=topic)
