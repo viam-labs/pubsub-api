@@ -18,7 +18,7 @@ The *publish()* command takes:
 * message: the message to publish to the topic
 * qos: the quality of service, if supported by the broker (for example, MQTT accepts 0|1|2)
 
-### subscribe(topic=*string*)
+### subscribe(topic=*string*, callback=*function*)
 
 The *subscribe()* command takes:
 
